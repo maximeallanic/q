@@ -1,0 +1,26 @@
+{
+  "name": "q",
+  "version": "1.0.0",
+  "description": "Q native promise for NodeJS and Browser",
+  "main": "index.js",
+  "scripts": {
+    "docs": "jsdoc2md index.js > README.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/maximeallanic/q.git"
+  },
+  "keywords": [
+    "q"
+  ],
+  "author": "Maxime Allanic <maxime@allanic.me> (https://allanic.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maximeallanic/q/issues"
+  },
+  "homepage": "https://github.com/maximeallanic/q#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "jsdoc-to-markdown": "^5.0.1"
+  }
+}
