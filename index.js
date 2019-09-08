@@ -18,6 +18,7 @@ if (!Promise.prototype.fail)
      * Appends a rejection handler callback to the promise,
      * and returns a new promise resolving to the return value of the callback if it is called,
      * or to its original fulfillment value if the promise is instead fulfilled.
+     * @alias Promise.prototype.catch
      * @name Promise.prototype.fail
      * @memberof Promise
      * @instance
@@ -163,11 +164,71 @@ function isPromiseLike(promise) {
 };
 module.exports.isPromiseLike = Promise.isPromiseLike = isPromiseLike;
 
+/**
+ * The Promise.allSettled() method returns a promise that resolves after
+ * all of the given promises have either resolved or rejected,
+ * with an array of objects that each describe the outcome of each promise.
+ *
+ * @param {Array} promises
+ * @return {Promise}
+ *
+ * @example
+ * var d1 = $q.defer();
+ * var d2 = $q.defer();
+ * $q.allSettled([
+ *      d1.promise,
+ *      d2.promise
+ * ])
+ *      .then((results) => {
+ *          // results contain [{status: 'fulfilled', value: 'test'}, {status: 'rejected', reason: 'test2'}]
+ *      });
+ * d1.resolve('test'); // Not resolved
+ * d2.reject('test2'); // Resolved
+ *
+ */
 module.exports.allSettled = Promise.allSettled = function (promises) {
     let wrappedPromises = promises.map((p) => {
         return Promise.resolve(p)
-            .then(val => ({ state: 'fulfilled', value: val }),
-                err => ({ state: 'rejected', reason: err }))
+            .then(val => ({ status: 'fulfilled', value: val }),
+                err => ({ status: 'rejected', reason: err }))
     });
     return Promise.all(wrappedPromises);
-}
+};
+
+/**
+ * Calls a Node.js-style function with the given variadic arguments,
+ * returning a promise that is fulfilled if the Node.js function calls back with a result,
+ * or rejected if it calls back with an error (or throws one synchronously).
+ *
+ * @param {function} command
+ * @param {any} ...args
+ * @return {Promise}
+ *
+ * @example
+ * $q.nfcall(FS.readFile, "foo.txt", "utf-8").done(function (text) {
+ * });
+ *
+ */
+module.exports.nfcall = Promise.nfcall = function (command, ...args) {
+    var deferred = defer();
+    args.push(function (error, resolve) {
+        if (error)
+            deferred.reject(error);
+        else
+            deferred.resolve(resolve);
+    });
+    command.apply(null, args);
+    return deferred.promise;
+};
+
+module.exports.resolve = (value) => {
+    return Promise.resolve(value);
+};
+
+module.exports.reject = (value) => {
+    return Promise.reject(value);
+};
+
+module.exports.all = (promises) => {
+    return Promise.all(promises);
+};

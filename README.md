@@ -1,3 +1,18 @@
+## Members
+
+<dl>
+<dt><a href="#allSettled">allSettled</a> ⇒ <code><a href="#Promise">Promise</a></code></dt>
+<dd><p>The Promise.allSettled() method returns a promise that resolves after
+all of the given promises have either resolved or rejected,
+with an array of objects that each describe the outcome of each promise.</p>
+</dd>
+<dt><a href="#nfcall">nfcall</a> ⇒ <code><a href="#Promise">Promise</a></code></dt>
+<dd><p>Calls a Node.js-style function with the given variadic arguments,
+returning a promise that is fulfilled if the Node.js function calls back with a result,
+or rejected if it calls back with an error (or throws one synchronously).</p>
+</dd>
+</dl>
+
 ## Objects
 
 <dl>
@@ -23,6 +38,52 @@
 </dd>
 </dl>
 
+<a name="allSettled"></a>
+
+## allSettled ⇒ [<code>Promise</code>](#Promise)
+The Promise.allSettled() method returns a promise that resolves after
+all of the given promises have either resolved or rejected,
+with an array of objects that each describe the outcome of each promise.
+
+**Kind**: global variable  
+
+| Param | Type |
+| --- | --- |
+| promises | <code>Array</code> | 
+
+**Example**  
+```js
+var d1 = $q.defer();
+var d2 = $q.defer();
+$q.allSettled([
+     d1.promise,
+     d2.promise
+])
+     .then((results) => {
+         // results contain [{status: 'fulfilled', value: 'test'}, {status: 'rejected', reason: 'test2'}]
+     });
+d1.resolve('test'); // Not resolved
+d2.reject('test2'); // Resolved
+```
+<a name="nfcall"></a>
+
+## nfcall ⇒ [<code>Promise</code>](#Promise)
+Calls a Node.js-style function with the given variadic arguments,
+returning a promise that is fulfilled if the Node.js function calls back with a result,
+or rejected if it calls back with an error (or throws one synchronously).
+
+**Kind**: global variable  
+
+| Param | Type |
+| --- | --- |
+| command | <code>function</code> | 
+| ...args | <code>any</code> | 
+
+**Example**  
+```js
+$q.nfcall(FS.readFile, "foo.txt", "utf-8").done(function (text) {
+});
+```
 <a name="Promise"></a>
 
 ## Promise : <code>object</code>

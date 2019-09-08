@@ -1,10 +1,11 @@
 {
-  "name": "q",
+  "name": "q-native",
   "version": "1.0.0",
   "description": "Q native promise for NodeJS and Browser",
   "main": "index.js",
   "scripts": {
-    "docs": "jsdoc2md index.js > README.md"
+    "docs": "jsdoc2md index.js > README.md",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/maximeallanic/q#readme",
   "dependencies": {},
   "devDependencies": {
-    "jsdoc-to-markdown": "^5.0.1"
+    "jsdoc-to-markdown": "^5.0.1",
+    "mocha": "^6.2.0"
   }
 }
