@@ -23,6 +23,6 @@
   "dependencies": {},
   "devDependencies": {
     "jsdoc-to-markdown": "^5.0.1",
-    "mocha": "^6.2.0"
+    "mocha": "^10.2.0"
   }
 }
